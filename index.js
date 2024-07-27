@@ -1,56 +1,53 @@
-window.onload=function reset(){
-    var ones=0o0,tens=0o0,t=0o0;var s=1;var mins=0o0;var con=0;
-document.querySelector(".start").addEventListener("click",function(){
-    s=1;
-    interval=setInterval(stopwatchtimer,100);
-})
-var stp=document.querySelector(".stop").addEventListener("click",function(){
-s=-1;
-con=1;
-})
+window.onload=function(){
+    var seconds=0o0,tens=0o0,mins=0o0,
+ startbtn=document.getElementById('start'),
+stopbtn=document.getElementById('stop'),
+rstbtn=document.getElementById('rst'),
+viewtens=document.getElementById('tens'),
+viewones=document.getElementById('ones'),
+ viewmins=document.getElementById('mins'),
+interval;
 
-var viewtens=document.getElementById('tens');
-var viewones=document.getElementById('ones');
-var viewmins=document.getElementById('mins');
+startbtn.onclick = function(){
+  interval=setInterval(stopwatchtimer,100);
+}
+stopbtn.onclick=function(){
+  clearInterval(interval);
+}
+rstbtn.onclick=function(){
+  clearInterval(interval);
+  seconds="00",tens='00',mins='00';
+  viewtens.innerHTML=tens;
+  viewones.innerHTML=seconds;
+  viewmins.innerHTML=mins;
+}
 
 function stopwatchtimer(){
-if(s==1){tens++;
+tens++;
 if(tens<=9){
-viewtens.innerHTML='0'+tens;}  
+    viewtens.innerHTML='0'+tens;
 }
-if(tens>9){
-    tens=0o0;
-    // viewtens.innerHTML='0'+tens;
-    if(ones<=8)
-    {viewones.innerHTML='0' + ++ones;}
-    else if(ones>=9 && ones<=58){
-        viewones.innerHTML=++ones;
-    }
-    else{
-        viewmins.innerHTML='0' + ++mins;
-        ones=0o0;
-        
-    }
+if(tens >9){
+    tens=0o0;seconds++;
+if(seconds<=9)
+    {viewones.innerHTML='0'+ seconds;}
+ if(seconds>9){
+    viewones.innerHTML=seconds;
 }
-else return ;
+ if(seconds>=59){
+    seconds=0o0;
+    mins++;
+    viewmins.innerHTML='0'+mins;
+}
+}
+}
 
-}
-document.querySelector(".rst").addEventListener("click",function(){
-    if(con==1){s=-1;
-    viewtens.innerHTML="00";
-    viewones.innerHTML="00";
-    viewmins.innerHTML="00";}
-    else {
-        return;
-    }
-    con=0;
-})
-document.querySelector("button").addEventListener("click",function(){
+document.getElementById('theme_toggle').addEventListener("click",function(){
     if(document.querySelector("button").style.backgroundColor=="white"){
         document.querySelector("button").style.backgroundColor="black";
        {document.getElementById('dark_theme').setAttribute("href","./style2.css");}
     }
-    else{document.querySelector("button").style.backgroundColor=="black";
+    else{document.getElementById('theme_toggle').style.backgroundColor=="black";
         document.querySelector("button").style.backgroundColor="white";
         {document.getElementById('dark_theme').setAttribute("href","./style1.css");}}
 });
